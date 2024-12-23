@@ -1,0 +1,134 @@
+definitions:
+  domain.GlossaryTerm:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      term:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /terms:
+    get:
+      description: Возвращает список всех терминов из глоссария.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.GlossaryTerm'
+            type: array
+        "500":
+          description: Ошибка сервера
+          schema:
+            type: string
+      summary: Получение всех терминов
+      tags:
+      - Глоссарий
+    post:
+      consumes:
+      - application/json
+      description: Добавляет новый термин в глоссарий с описанием.
+      parameters:
+      - description: Термин
+        in: body
+        name: term
+        required: true
+        schema:
+          $ref: '#/definitions/domain.GlossaryTerm'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.GlossaryTerm'
+        "400":
+          description: Неверные данные
+          schema:
+            type: string
+        "500":
+          description: Ошибка сервера
+          schema:
+            type: string
+      summary: Добавление нового термина
+      tags:
+      - Глоссарий
+  /terms/{term}:
+    delete:
+      description: Удаляет термин из глоссария по ключевому слову.
+      parameters:
+      - description: Ключевое слово
+        in: path
+        name: term
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Термин успешно удален
+        "500":
+          description: Ошибка сервера
+          schema:
+            type: string
+      summary: Удаление термина
+      tags:
+      - Глоссарий
+    get:
+      description: Возвращает информацию о термине по ключевому слову.
+      parameters:
+      - description: Ключевое слово
+        in: path
+        name: term
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GlossaryTerm'
+        "404":
+          description: Термин не найден
+          schema:
+            type: string
+      summary: Получение информации о термине
+      tags:
+      - Глоссарий
+    put:
+      consumes:
+      - application/json
+      description: Обновляет информацию о термине в глоссарии.
+      parameters:
+      - description: Термин
+        in: body
+        name: term
+        required: true
+        schema:
+          $ref: '#/definitions/domain.GlossaryTerm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GlossaryTerm'
+        "400":
+          description: Неверные данные
+          schema:
+            type: string
+        "500":
+          description: Ошибка сервера
+          schema:
+            type: string
+      summary: Обновление термина
+      tags:
+      - Глоссарий
+swagger: "2.0"
