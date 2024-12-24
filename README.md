@@ -53,3 +53,18 @@ http://localhost:8080/swagger/
     depends_on:
       - db
 ```
+
+Для демонстрации работы был реализован клиент.
+
+Выполним его сборку для windows:
+```powershell
+go build github.com/arvaliullin/go-restful-service/cmd/grpc_client
+```
+ и будем использовать его для обращения к сервису работающем в контейнере.
+
+```powershell
+
+./grpc_client.exe -command=list
+./grpc_client.exe -command=get -term="example"
+./grpc_client.exe -command=create -term="example" -description="An example term"
+```

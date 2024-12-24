@@ -21,6 +21,7 @@ COPY . .
 RUN protoc -I=$PROTO_DIR --go_out=$GO_OUT_DIR --go-grpc_out=$GO_OUT_DIR $PROTO_DIR/glossary.proto
 
 RUN go build -o /bin/grpc_service github.com/arvaliullin/go-restful-service/cmd/grpc_service
+RUN go build -o /bin/grpc_client github.com/arvaliullin/go-restful-service/cmd/grpc_client
 
 FROM alpine:latest
 RUN apk add --no-cache ca-certificates
