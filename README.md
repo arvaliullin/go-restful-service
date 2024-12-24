@@ -1,5 +1,6 @@
-# go-restful-service
+# glossary-service
 
+## restful-service
 Реализован сервис, который реализует операции к
 глоссарию употребляемых терминов,
 связанных с производительностью веб-приложений, использующих WebAssembly:
@@ -33,4 +34,37 @@ podman compose up
 
 ```
 http://localhost:8080/swagger/
+```
+
+## gRPC
+
+В этот же репозиторий добавил реализацию gRpc сервиса и клиента для него.
+Не изменяя реализации работы с базой данных, добавил еще один сервис на grpc.
+
+```
+  grpc-service:
+    build:
+      context: .
+      dockerfile: deployments/grpc.Dockerfile
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/database?sslmode=disable
+    ports:
+      - "50051:50051"
+    depends_on:
+      - db
+```
+
+Для демонстрации работы был реализован клиент.
+
+Выполним его сборку для windows:
+```powershell
+go build github.com/arvaliullin/go-restful-service/cmd/grpc_client
+```
+ и будем использовать его для обращения к сервису работающем в контейнере.
+
+```powershell
+
+./grpc_client.exe -command=list
+./grpc_client.exe -command=get -term="example"
+./grpc_client.exe -command=create -term="example" -description="An example term"
 ```

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package glossary;
+option go_package = "pkg/glossary";
+
+
+service GlossaryService {
+  rpc GetAllTerms (Empty) returns (GlossaryTerms);
+  rpc GetTermByTerm (GlossaryTermRequest) returns (GlossaryTerm);
+  rpc CreateTerm (GlossaryTerm) returns (GlossaryTerm);
+  rpc UpdateTerm (GlossaryTerm) returns (GlossaryTerm);
+  rpc DeleteTerm (GlossaryTermRequest) returns (Status);
+}
+
+message GlossaryTerm {
+  int64 id = 1;
+  string term = 2;
+  string description = 3;
+}
+
+message GlossaryTermRequest {
+  string term = 1;
+}
+
+message GlossaryTerms {
+  repeated GlossaryTerm terms = 1;
+}
+
+message Empty {}
+
+message Status {
+  string message = 1;
+}
